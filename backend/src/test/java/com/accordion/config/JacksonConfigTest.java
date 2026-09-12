@@ -14,7 +14,9 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @TestPropertySource(properties = {
     "jwt.secret=TestSecretKeyForApplicationContextMinimum32BytesRequired",
-    "jwt.expiration=86400000"
+    "jwt.expiration=86400000",
+    // Never report test runs to the trace service.
+    "usage-reporting.enabled=false"
 })
 class JacksonConfigTest {
 

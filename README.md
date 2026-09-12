@@ -171,6 +171,9 @@ cp sample.env .env
 - `APP_USERNAME_MIN_LENGTH`: Minimum username length (default: 3)
 - `APP_USERNAME_MAX_LENGTH`: Maximum username length (default: 50)
 - `APP_PASSWORD_MIN_LENGTH`: Minimum password length (default: 8)
+- `USAGE_REPORTING_ENABLED`: Whether the backend reports that it is in use to the
+  [trace](https://github.com/Stephenson-Software/trace) usage service (default: `true`; see
+  [Usage reporting](#usage-reporting))
 
 See `sample.env` for the complete list of configurable options.
 
@@ -321,6 +324,7 @@ accordion-prototype/
 │       ├── repository/            # Data repositories
 │       ├── security/              # JWT issuing/validation and authentication filters
 │       ├── service/               # Business logic
+│       ├── trace/                 # Vendored trace-client-java (usage reporting)
 │       └── util/                  # Validation utilities
 ├── webapp/                         # Spring Boot web application
 │   ├── pom.xml                    # Maven configuration
@@ -373,6 +377,30 @@ server.port=8080
 spring.datasource.url=jdbc:h2:mem:chatdb
 spring.h2.console.enabled=true
 ```
+
+### Usage reporting
+
+The backend reports that it is in use to the
+[trace](https://github.com/Stephenson-Software/trace) usage service at
+`https://trace.danielstephenson.dev`, so it is known how many Accordion servers are running
+and on which versions. It sends exactly two kinds of event:
+
+- `startup`, once the backend is ready — the program name (`accordion`) and its version only
+- `channel-created`, each time a channel is created through the API — the program name only
+
+Nothing about users, messages, channel names, the host or its address is ever sent. The send
+happens on its own daemon thread, never throws and never blocks startup; a trace server that is
+unreachable is a dropped report, not an error. Reporting is on by default and the backend logs
+one INFO line at every start saying whether it is on:
+
+```
+Usage reporting is on: accordion sends a startup event (program name and version only) and a channel-created event (program name only) to https://trace.danielstephenson.dev. Turn it off with USAGE_REPORTING_ENABLED=false (usage-reporting.enabled).
+```
+
+To turn it off, set `USAGE_REPORTING_ENABLED=false` in `.env` (Docker Compose) or in the
+backend's environment, or set `usage-reporting.enabled=false` in
+`backend/src/main/resources/application.properties`. `USAGE_REPORTING_ENDPOINT` points it at
+a different trace server. Tests never report.
 
 ### Frontend
 

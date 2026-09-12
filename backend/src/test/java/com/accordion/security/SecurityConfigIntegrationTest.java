@@ -27,7 +27,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
     "app.username.min-length=3",
     "app.password.min-length=8",
     "jwt.secret=TestSecretKeyForIntegrationTestsMinimum32BytesRequired",
-    "jwt.expiration=86400000"
+    "jwt.expiration=86400000",
+    // Never report test runs to the trace service.
+    "usage-reporting.enabled=false"
 })
 class SecurityConfigIntegrationTest {
 

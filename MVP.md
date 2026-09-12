@@ -237,7 +237,10 @@ accordion-prototype/
 │       │   │   ├── service/
 │       │   │   │   ├── ChannelService.java
 │       │   │   │   ├── ChatService.java
+│       │   │   │   ├── UsageReportingService.java
 │       │   │   │   └── UserService.java
+│       │   │   ├── trace/
+│       │   │   │   └── TraceClient.java   # vendored trace-client-java
 │       │   │   └── util/
 │       │   │       └── ValidationUtils.java
 │       │   └── resources/
