@@ -20,7 +20,9 @@ import static org.mockito.Mockito.when;
 @SpringBootTest
 @TestPropertySource(properties = {
     "jwt.secret=TestSecretKeyForTypingIndicatorMinimum32BytesRequired",
-    "jwt.expiration=86400000"
+    "jwt.expiration=86400000",
+    // Never report test runs to the trace service.
+    "usage-reporting.enabled=false"
 })
 public class TypingIndicatorTest {
 

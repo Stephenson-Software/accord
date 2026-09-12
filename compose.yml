@@ -46,6 +46,10 @@ services:
       - APP_USERNAME_MAX_LENGTH=${APP_USERNAME_MAX_LENGTH:-50}
       - APP_USERNAME_MIN_LENGTH=${APP_USERNAME_MIN_LENGTH:-3}
       - APP_PASSWORD_MIN_LENGTH=${APP_PASSWORD_MIN_LENGTH:-8}
+
+      # Usage reporting to trace (a startup event and a channel-created event, program name
+      # and version only; see README). On by default; USAGE_REPORTING_ENABLED=false turns it off.
+      - USAGE_REPORTING_ENABLED=${USAGE_REPORTING_ENABLED:-true}
     
     volumes:
       - h2_data:/app/data

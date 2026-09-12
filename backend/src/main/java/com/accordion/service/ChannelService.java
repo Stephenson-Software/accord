@@ -14,6 +14,9 @@ public class ChannelService {
     @Autowired
     private ChannelRepository channelRepository;
 
+    @Autowired
+    private UsageReportingService usageReportingService;
+
     public Channel createChannel(String name, String description, String createdBy) {
         // Check if channel with this name already exists
         if (channelRepository.findByName(name).isPresent()) {
@@ -21,7 +24,9 @@ public class ChannelService {
         }
         
         Channel channel = new Channel(name, description, createdBy);
-        return channelRepository.save(channel);
+        Channel saved = channelRepository.save(channel);
+        usageReportingService.reportChannelCreated();
+        return saved;
     }
 
     public List<Channel> getAllChannels() {

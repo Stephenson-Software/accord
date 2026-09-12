@@ -23,6 +23,9 @@ class ChannelServiceTest {
     @Mock
     private ChannelRepository channelRepository;
 
+    @Mock
+    private UsageReportingService usageReportingService;
+
     @InjectMocks
     private ChannelService channelService;
 
@@ -46,6 +49,7 @@ class ChannelServiceTest {
         assertEquals("System", result.getCreatedBy());
         verify(channelRepository).findByName("general");
         verify(channelRepository).save(any(Channel.class));
+        verify(usageReportingService).reportChannelCreated();
     }
 
     @Test
@@ -58,6 +62,7 @@ class ChannelServiceTest {
 
         verify(channelRepository).findByName("general");
         verify(channelRepository, never()).save(any(Channel.class));
+        verify(usageReportingService, never()).reportChannelCreated();
     }
 
     @Test

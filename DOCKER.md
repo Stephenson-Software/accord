@@ -67,6 +67,14 @@ nano .env  # or use your preferred editor
 - `APP_USERNAME_MAX_LENGTH`: Maximum username length (default: 50)
 - `APP_PASSWORD_MIN_LENGTH`: Minimum password length (default: 8)
 
+#### Usage Reporting
+- `USAGE_REPORTING_ENABLED`: Whether the backend reports that it is in use to the
+  [trace](https://github.com/Stephenson-Software/trace) usage service (default: `true`).
+  It sends one `startup` event when ready (program name `accordion` and its version only) and
+  one `channel-created` event per channel created (program name only) — nothing about users,
+  messages, channel names or the host. Set to `false` to turn it off; the backend logs one
+  INFO line at every start saying whether it is on. See the README's "Usage reporting" section.
+
 #### Database Configuration (H2)
 - `SPRING_DATASOURCE_URL`: Database connection URL
 - `SPRING_DATASOURCE_USERNAME`: Database username
